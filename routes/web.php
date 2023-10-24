@@ -27,9 +27,9 @@ use Illuminate\Support\Facades\Route;
 // });
 
 
-Route::get('/', [PortofolioController::class, 'index']);
-Route::get('/regis', [PortofolioController::class, 'register']);
-Route::get('/log', [PortofolioController::class, 'masuk']);
-
-
+Route::get('/', [PortofolioController::class, 'index'])->middleware('auth');
+Route::get('/register', [PortofolioController::class, 'register'])->middleware('guest')->name('register');
+Route::post('/register', [PortofolioController::class, 'store']);
+Route::get('/login', [PortofolioController::class, 'masuk'])->middleware('guest')->name('login');
+Route::get('/logout', [PortofolioController::class, 'logout']);
 Route::post('/login', [PortofolioController::class, 'login']);

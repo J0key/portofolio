@@ -28,7 +28,7 @@
 
 <body>
     {{-- yang paling atas ditampilin== yang paling bawah --}}
-
+    
     @extends('page.end')
     @extends('page.work')
     @extends('page.skill')

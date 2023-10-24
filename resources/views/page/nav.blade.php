@@ -65,7 +65,7 @@
                          </li>
 
                          <li class="group pl-6">
-                             <a href="/">
+                             <a href="/logout">
                                  <span class="cursor-pointer pt-0.5 font-header font-bold uppercase text-white">Log
                                      Out</span>
                                  <span class="block h-0.5 w-full bg-transparent group-hover:bg-yellow"></span>
@@ -109,8 +109,13 @@
 
          <div>
              <div class="relative bg-cover bg-center bg-no-repeat py-8 bg-lime-600">
-
+                @if (session('succes'))
+                    <div  id="successDiv" class="max-w-sm mt-12 ml-8 p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
+                        <span class="font-medium">Success!</span> {{ session('succes') }}
+                      </div>
+                @endif
                  <div class="container relative z-30 pt-20 pb-12 sm:pt-56 sm:pb-48 lg:pt-64 lg:pb-48">
+                    
                      <div class="flex flex-col items-center justify-center lg:flex-row">
                          <div class="rounded-2xl border-none border-primary shadow-2xl">
                              <img src="img/saya.jpg" class="h-96 rounded-2xl sm:h-56" alt="author" />
@@ -119,7 +124,7 @@
                          <div class="pt-8 sm:pt-10 lg:pl-8 lg:pt-0">
                              <h1
                                  class="text-center font-header text-4xl text-white sm:text-left sm:text-5xl md:text-6xl">
-                                 Hello, I'm Shyra Athaya
+                                 Hello, I'm {{ Auth::user()->username }}
                              </h1>
                              <div class="flex flex-col justify-center pt-3 sm:flex-row sm:pt-5 lg:justify-start">
                                  <div class="flex items-center justify-center pl-0 sm:justify-start md:pl-1">
@@ -141,3 +146,15 @@
                      </div>
                  </div>
              </div>
+
+             <script>
+                // Get a reference to the div element
+                var successDiv = document.getElementById('successDiv');
+            
+                // Remove the div after 3 seconds (3000 milliseconds)
+                setTimeout(function() {
+                    if (successDiv) {
+                        successDiv.remove();
+                    }
+                }, 2000);
+            </script>
