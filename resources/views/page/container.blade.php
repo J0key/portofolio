@@ -23,7 +23,8 @@
     <link href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet" />
     <link crossorigin="anonymous" href="styles/main.min.css" media="screen" rel="stylesheet" />
     <title>Portofolio</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css','resources/js/app.js'])
+    <link rel="stylesheet" href="{{ asset('build/assets/app-4f4a373c.css') }}">
 </head>
 
 <body>
@@ -36,7 +37,7 @@
     @extends('page.nav')
 
 
-
+    <script src="{{ asset('/build/assets/app-422dbcc3.js') }}"></script>
 
 </body>
 
