@@ -36,3 +36,7 @@ Route::get('/login', [PortofolioController::class, 'masuk'])->middleware('guest'
 Route::post('/login', [PortofolioController::class, 'login']);
 
 Route::get('/logout', [PortofolioController::class, 'logout']);
+
+
+// Route::get('/send-email', [SendEmailController::class, 'index'])->name('send-email');
+// Route::post('/post-email', [SendEmailController::class, 'store'])->name('post-email');

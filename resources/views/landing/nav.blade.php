@@ -26,14 +26,14 @@
         <div class="z-10 px-8">
             <div class="text-white bg-black h-12 px-8 py-3 flex justify-end border border-black shadow-2xl">
                 <li class="group pl-6 list-none">
-                    <a href="/login">
-                        <span class="cursor-pointer pt-0.5 font-header font-bold uppercase text-white">SIGN IN</span>
+                    <a href="/login" >
+                        <span class="cursor-pointer pt-0.5 font-header font-bold text-md hover:text-xl uppercase text-white hover:text-lime-600">SIGN IN</span>
                         <span class="block h-0.5 w-full bg-transparent group-hover:bg-yellow"></span>
                     </a>
                 </li>
                 <li class="group pl-6 list-none">
                     <a href="/register">
-                        <span class="cursor-pointer pt-0.5 font-header font-bold uppercase text-white">SIGN UP</span>
+                        <span class="cursor-pointer pt-0.5 font-header font-bold uppercase text-md hover:text-xl  text-white hover:text-lime-600">SIGN UP</span>
                         <span class="block h-0.5 w-full bg-transparent group-hover:bg-yellow"></span>
                     </a>
                 </li>

@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Jobs\SendMailJob;
 use App\Models\Portofolio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StorePortofolioRequest;
 use App\Http\Requests\UpdatePortofolioRequest;
-
+use App\Mail\SendEmail;
+use Illuminate\Support\Facades\Mail;
 
 class PortofolioController extends Controller
 {
@@ -37,15 +39,18 @@ class PortofolioController extends Controller
             'password'=>'required|min:8'
         ]);
 
+        $userData = [
+            'username' => $request->username,
+            'email' => $request->email,
+        ];
+
         $validated['password'] = \bcrypt($validated['password']);
-
-
         User::create($validated);
+        Mail::to($request->email)->send(new SendEmail($userData));
 
         return redirect('/login')->with('success', 'Berhasil register, silahkan login');
+
     }
-
-
 
     public function login(Request $request)
     {
@@ -56,17 +61,6 @@ class PortofolioController extends Controller
             'username.required'=> 'Username wajib diisi',
             'password.required'=> 'Password wajib diisi',
         ]);
-
-        // $infologin =[
-        //     'email'=> $request->email,
-        //     'password'=> $request->password,
-        // ];
-
-        // if(Auth::attempt($infologin)){
-        //     return 'sukses';
-        // }else{
-        //     return 'gagal';
-        // }
 
         $credintials = [
             "username"=>$request['username'],
