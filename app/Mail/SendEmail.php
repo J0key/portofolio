@@ -16,6 +16,8 @@ class SendEmail extends Mailable
     }
     public function build()
     {
-        return $this->view('emails.emailScript');
+        return $this->view('emails.emailScript', [
+            'userData'=>$this->userData
+        ]);
     }
 }

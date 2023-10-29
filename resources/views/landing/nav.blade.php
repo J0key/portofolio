@@ -17,7 +17,10 @@
         rel="stylesheet" />
     <link href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet" />
     <title>Portofolio</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link rel="stylesheet" href="public/build/assets/app-c83c9c39.css">
+    <link rel="stylesheet" href="public/build/assets/app-422dbcc3.js">
+    <link rel="stylesheet" href="public/build/manifest.json ">
+
 
 </head>
 

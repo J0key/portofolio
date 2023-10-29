@@ -40,13 +40,13 @@ class PortofolioController extends Controller
         ]);
 
         $userData = [
-            'username' => $request->username,
-            'email' => $request->email,
+            'username' => $request['username'],
+            'email' => $request['email'],
         ];
 
         $validated['password'] = \bcrypt($validated['password']);
         User::create($validated);
-        Mail::to($request->email)->send(new SendEmail($userData));
+        dispatch(new SendMailJob($userData));
 
         return redirect('/login')->with('success', 'Berhasil register, silahkan login');
 
