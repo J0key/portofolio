@@ -17,9 +17,7 @@
         rel="stylesheet" />
     <link href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet" />
     <title>Portofolio</title>
-    <link rel="stylesheet" href="public/build/assets/app-c83c9c39.css">
-    <link rel="stylesheet" href="public/build/assets/app-422dbcc3.js">
-    <link rel="stylesheet" href="public/build/manifest.json ">
+    <link rel="stylesheet" href="{{ asset('build/assets/app-c83c9c39.css') }}">
 
 
 </head>
@@ -56,5 +54,7 @@
             </div>
         </div>
     </div>
+
+    <script src="{{ asset('build\assets\app-422dbcc3.js') }}"></script>
 </body>
 </html>
