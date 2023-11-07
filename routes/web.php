@@ -35,6 +35,14 @@ Route::post('/register', [PortofolioController::class, 'store']);
 Route::get('/login', [PortofolioController::class, 'masuk'])->middleware('guest')->name('login');
 Route::post('/login', [PortofolioController::class, 'login']);
 
+
+Route::get('/update' , [PortofolioController::class, "create"])->name('create');
+Route::get("/{id}/edit", [PortofolioController::class,"edit"])->name("edit");
+Route::put("/{id}", [PortofolioController::class,"update"])->name("update");
+
+Route::get('/imageres', [PortofolioController::class, "image"])->middleware('auth');
+
+
 Route::get('/logout', [PortofolioController::class, 'logout']);
 
 

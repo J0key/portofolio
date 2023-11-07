@@ -27,6 +27,11 @@ class PortofolioController extends Controller
         ]);
 
     }
+    public function image(){
+        return view("landing.imageres" , [
+            'data' => User::all(),
+        ]);
+    }
 
     public function register()
     {
@@ -61,6 +66,7 @@ class PortofolioController extends Controller
         
             // Resize the image to your desired dimensions (e.g., 200x200)
             $resizedImage = Image::make($image)->fit(200, 200);
+            $thumbnailImage = Image::make($image)->fit(1280, 720);
         
             // Define the base path
             $basePath = '/posted';
@@ -70,6 +76,9 @@ class PortofolioController extends Controller
         
             // Save the original image to the storage directory with the same filename
             Storage::put($basePath . '/normal/' . $filename, file_get_contents($image));
+
+            Storage::put($basePath . '/thumbnail/' . $filename,  $thumbnailImage->encode());
+
         
             // Store the path to the resized image in the $userData array
             $validated['photo'] = $filename; // This path is relative to your public directory
@@ -107,10 +116,69 @@ class PortofolioController extends Controller
  
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',
-        ])->onlyInput('email');
-
-        
+        ])->onlyInput('email');  
     }
+
+    public function create(){
+        return view("landing.edit");
+    }
+
+    public function edit($id) {
+        return view('landing.edit', ['data' => User::find($id)]);
+    }
+    
+
+
+    public function update(Request $request, $id){
+        $validated = $request->validate([
+            'email'=>'required|email|unique:users',
+            'username'=>'required|min:5',
+            'password'=>'required|min:8',
+            'photo'=>'image|nullable|max:2048'
+        ]);
+
+        $userData = [
+            'username' => $request['username'],
+            'email' => $request['email'],
+        ];
+
+        $validated['password'] = \bcrypt($validated['password']);
+
+        if($request->file('photo')){
+            if($request->oldImage){
+                Storage::delete($request->oldImage);
+            }
+
+        if ($request->file('photo')) {
+            $image = $request->file('photo');
+        
+            // Generate a unique filename for both images
+            $filename = time() . '.' . $image->getClientOriginalExtension();
+        
+            // Resize the image to your desired dimensions (e.g., 200x200)
+            $resizedImage = Image::make($image)->fit(200, 200);
+        
+            // Define the base path
+            $basePath = '/posted';
+        
+            // Save the resized image to the storage directory with the same filename
+            Storage::put($basePath . '/square/' . $filename, $resizedImage->encode());
+        
+            // Save the original image to the storage directory with the same filename
+            Storage::put($basePath . '/normal/' . $filename, file_get_contents($image));
+        
+            // Store the path to the resized image in the $userData array
+            $validated['photo'] = $filename; // This path is relative to your public directory
+        }
+
+        User::where('id' , $id)
+        ->update($validated);
+
+        return redirect()->intended('/')->with('succes', 'Berhasil Login');
+
+    }
+}
+
 
     public function logout(Request $request){
         Auth::logout();

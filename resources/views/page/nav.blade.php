@@ -69,22 +69,22 @@
                                  <button id="dropdownButton" data-dropdown-toggle="dropdown"
                                      class="inline-block text-sm p-1.5" type="button">
                                      @foreach ($data as $item)
-                                     <img class="w-7 h-7 rounded-full" src="{{ asset("storage/posted/square/".$item->photo) }}" alt="{{ $item->username}}">   
+                                     <img class="w-7 h-7 rounded-full" src="{{ asset("storage/posted/square/".$item->photo) }}" 
+                                     alt="{{ $item->username}}">   
                                      @endforeach   
                                  </button>
                                  <!-- Dropdown menu -->
                                  <div id="dropdown"
                                      class="z-10 hidden text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 ">
                                      <ul class="py-2" aria-labelledby="dropdownButton">
+                                        <li>
+                                            <a href="{{ route('create')}}"
+                                                class="block px-4 py-2 text-sm text-blue-500 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Update Photo</a>
+                                        </li>
                                          <li>
-                                             <a href="#"
-                                                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Edit Photo</a>
+                                             <a href="/imageres"
+                                                 class="block px-4 py-2 text-sm text-yellow-500 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Resized Image</a>
                                          </li>
-                                         {{-- <li>
-                                             <a href="#"
-                                                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Export
-                                                 Data</a>
-                                         </li> --}}
                                          <li>
                                              <a href="/logout"
                                                  class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Log out</a>
