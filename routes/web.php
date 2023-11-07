@@ -40,7 +40,7 @@ Route::get('/update' , [PortofolioController::class, "create"])->name('create');
 Route::get("/{id}/edit", [PortofolioController::class,"edit"])->name("edit");
 Route::put("/{id}", [PortofolioController::class,"update"])->name("update");
 
-Route::get('/imageres', [PortofolioController::class, "image"])->middleware('auth');
+Route::get('/imageres', [PortofolioController::class, "image"]);
 
 
 Route::get('/logout', [PortofolioController::class, 'logout']);

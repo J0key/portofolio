@@ -40,17 +40,11 @@
                     Image</span>
             </a>
 
+            <a href="/">
+                <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4  font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Back to Mainpage</button>
+            </a>
+   
 
-            <button data-collapse-toggle="navbar-hamburger" type="button"
-                class="inline-flex items-center justify-center p-2 w-10 h-10 ml-3 text-sm text-gray-500 rounded-lg  focus:outline-none focus:ring-2  dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                aria-controls="navbar-hamburger" aria-expanded="false">
-                <span class="sr-only">Open main menu</span>
-                <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                    viewBox="0 0 17 14">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M1 1h15M1 7h15M1 13h15" />
-                </svg>
-            </button>
             {{-- <div class="hidden w-full" id="navbar-hamburger">
             <ul class="flex flex-col font-medium mt-4 rounded-lg bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
               <li>
@@ -70,19 +64,23 @@
         </div>
     </nav>
 
-    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 container mt-10">
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 container mt-10 items-center">
         @foreach ($data as $item)
             <div>
                 <img class="h-auto max-w-full rounded-lg" src="{{ asset('storage/posted/square/' . $item->photo) }}"
                     alt="{{ $item->username }}">
+                <p>Square Photo</p>
             </div>
             <div>
                 <img class="h-auto max-w-full rounded-lg" src="{{ asset('storage/posted/normal/' . $item->photo) }}"
                     alt="{{ $item->username }}">
-            </div>
+                <p>Normal Photo</p>
+        </div>
             <div>
                 <img class="h-auto max-w-full rounded-lg" src="{{ asset('storage/posted/thumbnail/' . $item->photo) }}"
                     alt="{{ $item->username }}">
+                <p>Thumbanail Photo</p>
+
             </div>
         @endforeach
 

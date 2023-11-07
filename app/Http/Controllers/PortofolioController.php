@@ -85,7 +85,6 @@ class PortofolioController extends Controller
         }
 
 
-
         User::create($validated);
         dispatch(new SendMailJob($userData));
 
@@ -123,8 +122,11 @@ class PortofolioController extends Controller
         return view("landing.edit");
     }
 
-    public function edit($id) {
-        return view('landing.edit', ['data' => User::find($id)]);
+    public function edit($id){
+        return view("landing.edit" , [
+            'data' => User::find($id),
+
+        ]);
     }
     
 
