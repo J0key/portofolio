@@ -36,9 +36,9 @@ Route::get('/login', [PortofolioController::class, 'masuk'])->middleware('guest'
 Route::post('/login', [PortofolioController::class, 'login']);
 
 
-Route::get('/update' , [PortofolioController::class, "create"])->name('create');
+// Route::get('/update' , [PortofolioController::class, "edit"])->name('edit');
 Route::get("/{id}/edit", [PortofolioController::class,"edit"])->name("edit");
-Route::put("/{id}", [PortofolioController::class,"update"])->name("update");
+Route::put("/{id}", [PortofolioController::class,'update'])->name('update');
 
 Route::get('/imageres', [PortofolioController::class, "image"]);
 

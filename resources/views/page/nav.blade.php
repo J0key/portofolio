@@ -68,17 +68,16 @@
                              <div class="flex justify-end">
                                  <button id="dropdownButton" data-dropdown-toggle="dropdown"
                                      class="inline-block text-sm p-1.5" type="button">
-                                     @foreach ($data as $item)
-                                     <img class="w-7 h-7 rounded-full" src="{{ asset("storage/posted/square/".$item->photo) }}" 
-                                     alt="{{ $item->username}}">   
-                                     @endforeach   
+
+                                     <img class="w-7 h-7 rounded-full" src="{{ asset("storage/posted/square/".$data->photo) }}" 
+                                     alt="{{ $data->username}}">   
                                  </button>
                                  <!-- Dropdown menu -->
                                  <div id="dropdown"
                                      class="z-10 hidden text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 ">
                                      <ul class="py-2" aria-labelledby="dropdownButton">
                                         <li>
-                                            <a href="{{ route('create')}}"
+                                            <a href="{{ route('edit', $data->id) }}"
                                                 class="block px-4 py-2 text-sm text-blue-500 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Update Photo</a>
                                         </li>
                                          <li>

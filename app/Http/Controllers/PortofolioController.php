@@ -22,11 +22,12 @@ class PortofolioController extends Controller
     public function index()
     {
         return view("page.container" , [
-            'data' => User::all(),
+            'data' => Auth::user(),
 
         ]);
 
     }
+
     public function image(){
         return view("landing.imageres" , [
             'data' => User::all(),
@@ -122,64 +123,131 @@ class PortofolioController extends Controller
         return view("landing.edit");
     }
 
-    public function edit($id){
-        return view("landing.edit" , [
-            'data' => User::find($id),
+    // public function edit($id){
+    //     return view("landing.edit" , [
+    //         'data' => User::find($id),
 
-        ]);
+    //     ]);
+    // }
+
+    public function edit($id){
+        $data = User::find($id);
+
+        return view('landing.edit' , compact('data'));
     }
     
 
 
     public function update(Request $request, $id){
         $validated = $request->validate([
-            'email'=>'required|email|unique:users',
+            'email'=>'required|email',
             'username'=>'required|min:5',
-            'password'=>'required|min:8',
-            'photo'=>'image|nullable|max:2048'
+            // 'password'=>'required|min:8',
+            'image'=>'image|nullable|max:2048'
         ]);
+
 
         $userData = [
             'username' => $request['username'],
             'email' => $request['email'],
         ];
 
-        $validated['password'] = \bcrypt($validated['password']);
+        // $validated['password'] = \bcrypt($validated['password']);
 
-        if($request->file('photo')){
-            if($request->oldImage){
-                Storage::delete($request->oldImage);
+
+        $data = User::findOrFail($id);
+
+        $data->username = $request->username;
+        $data->email = $request->email;
+
+        if($request->file('image')){
+            if ($request->oldImage) {
+                dd($request->oldImage);
+                Storage::delete('public/posted/normal/' . $request->oldImage);
+                Storage::delete('public/posted/square/' . $request->oldImage);
+                Storage::delete('public/posted/thumbnail/' . $request->oldImage);
             }
 
-        if ($request->file('photo')) {
-            $image = $request->file('photo');
-        
-            // Generate a unique filename for both images
-            $filename = time() . '.' . $image->getClientOriginalExtension();
-        
-            // Resize the image to your desired dimensions (e.g., 200x200)
-            $resizedImage = Image::make($image)->fit(200, 200);
-        
-            // Define the base path
-            $basePath = '/posted';
-        
-            // Save the resized image to the storage directory with the same filename
-            Storage::put($basePath . '/square/' . $filename, $resizedImage->encode());
-        
-            // Save the original image to the storage directory with the same filename
-            Storage::put($basePath . '/normal/' . $filename, file_get_contents($image));
-        
-            // Store the path to the resized image in the $userData array
-            $validated['photo'] = $filename; // This path is relative to your public directory
+            if ($request->file('image')) {
+                $image = $request->file('image');
+            
+                // Generate a unique filename for both images
+                $filename = time() . '.' . $image->getClientOriginalExtension();
+            
+                // Resize the image to your desired dimensions (e.g., 200x200)
+                $resizedImage = Image::make($image)->fit(200, 200);
+                $thumbnailImage = Image::make($image)->fit(160, 90);
+            
+                // Define the base path
+                $basePath = '/posted';
+            
+                // Save the resized image to the storage directory with the same filename
+                Storage::put($basePath . '/square/' . $filename, $resizedImage->encode());
+            
+                // Save the original image to the storage directory with the same filename
+                Storage::put($basePath . '/normal/' . $filename, file_get_contents($image));
+
+                Storage::put($basePath . '/thumbnail/' . $filename, $resizedImage->encode());
+
+            
+                // Store the path to the resized image in the $userData array
+                $validated['photo'] = $filename; // This path is relative to your public directory
+            }
+            $data->photo = $validated['photo'];
+
+            $data->save();
+
+            // User::where('id' , $id)
+            // ->update($validated);
+
+            // return print("berhasil");
+            return redirect('/')->with('success', 'Berhasil Login');
         }
-
-        User::where('id' , $id)
-        ->update($validated);
-
-        return redirect()->intended('/')->with('succes', 'Berhasil Login');
-
     }
-}
+
+
+    // public function update(Request $request, $id){
+    //     $request->validate([
+    //         'name' => 'required|string|max:250',
+    //         'email' => 'required|email',
+    //         'photo' => 'image|nullable|max:1999'
+    //     ]);
+    //     // dd($request->all());
+    //     $user = User::findOrFail($id);
+    //     // check apakah image is uploaded
+    //     if ($request->hasFile('photo')){
+    //         // upload  new image
+    //         $image = $request->file('photo');
+    //         $filenameWithExt = $request->file('photo')->getClientOriginalName();
+    //         $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+    //         $extension = $request->file('photo')->getClientOriginalExtension();
+    //         $filenameSimpan = $filename . '_' . time() . '.' . $extension;
+    //         $basePath = '/updated';
+    //         $path = $request->file('photo')->storeAs($basePath . '/updatepPhoto/'. $filenameSimpan , file_get_contents($image));
+           
+
+    //         //delete old image
+    //         // dd(public_path().''.$user->photo);
+    //         Storage::delete('storage/posted/normal/'.$user->photo);
+
+    //         //update post with new image
+    //         $user->update([
+    //             'name'      => $request->name,
+    //             'email'     => $request->email,
+    //             'photo'     => $filenameSimpan
+    //         ]);
+    //     } else {
+    //         //update user without photo
+    //         $user->update([
+    //             'name'      => $request->name,
+    //             'email'     => $request->email,
+    //         ]);
+    //     }
+    //     //redirect to dashboard
+    //     return redirect()->route('/')->with(['message' => 'Data Berhasil Diubah!']);
+    // }
+
+
 
 
     public function logout(Request $request){

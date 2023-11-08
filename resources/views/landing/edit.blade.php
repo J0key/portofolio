@@ -39,10 +39,10 @@
                         <div class="flex items-center justify-end ">
                             <div class="bg-black flex flex-col w-80 border border-lime-600 rounded-lg px-8 py-10">
 
-                                <form class="flex flex-col space-y-8" action="" method="POST"
+                                <form class="flex flex-col space-y-8" action="{{ route('update', $data->id)}}" method="POST" 
                                     enctype="multipart/form-data">
                                     @csrf
-                                    @method('put')
+                                    @method('PUT')
 
                                     @if ($errors->any())
                                         <div class="pt-3">
@@ -65,19 +65,22 @@
                                         class="border rounded-lg py-3 px-3  bg-black hover:border-lime-600 border-white placeholder-white-500 text-white">
 
                                     <label class="font-bold text-lg text-white">Email</label>
-                                    <input type="email" name="email" placeholder="e.g. aaa@gmail.com"
+                                    <input type="email" name="email" placeholder="e.g. aaa@gmail.com" value='{{ old('email', $data->email) }}'
                                         class="border rounded-lg py-3 px-3 bg-black hover:border-lime-600 border-white placeholder-white-500 text-white">
 
-                                    <label class="font-bold text-lg text-white ">Password</label>
-                                    <input type="password" name="password" placeholder="*****"
-                                        class="border rounded-lg py-3 px-3  bg-black border-white hover:border-lime-600 placeholder-white-500 text-white">
+                                    {{-- <label class="font-bold text-lg text-white ">Password</label>
+                                    <input type="password" name="password" placeholder="*****" 
+                                        class="border rounded-lg py-3 px-3  bg-black border-white hover:border-lime-600 placeholder-white-500 text-white"> --}}
 
-                                    <label class="font-bold text-lg text-white" for="photo">Profile Photo</label>
-                                    <input type="hidden" name="oldImage">
-                                    <input name="photo"
-                                        class="block w-4/5 mb-5 text-sm text-lime-600 bg-white rounded-lg cursor-pointer dark:text-lime-600 focus:outline-none dark:bg-lime-700 dark:border-lime-600 dark:placeholder-lime-400"
-                                        id="default_size" type="file" onchange="previewImage(event)">
-                                    <div id="image-preview"></div>
+                                        <label for="image" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Upload Image</label>
+                                        <input type="hidden" name="oldImage" value="{{ $data->photo }}">
+                                        @if ($data->photo)
+                                        <img src="{{ asset('storage/posted/normal/'.$data->photo) }}" class="img-preview max-h-[300px] mb-5">
+                                        @else
+                                        <img class="img-preview max-h-[300px] mb-5">
+                                        @endif
+                                        <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="file_input_help" id="image" name="image" type="file" onchange="previewImage()">
+                                        <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG, JPG or GIF (MAX. 800x400px).</p>
 
                                     <button name="submit" type="submit"
                                         class="border border-white bg-black text-white hover:border-lime-600 rounded-lg py-3 font-semibold">Edit
@@ -88,22 +91,36 @@
                     </div>
 
                     <script>
-                        function previewImage(event) {
-                            const input = event.target;
-                            const imagePreview = document.getElementById("image-preview");
+                        // function previewImage(event) {
+                        //     const input = event.target;
+                        //     const imagePreview = document.getElementById("image-preview");
 
-                            if (input.files && input.files[0]) {
-                                const reader = new FileReader();
+                        //     if (input.files && input.files[0]) {
+                        //         const reader = new FileReader();
 
-                                reader.onload = function(e) {
-                                    imagePreview.innerHTML =
-                                        `<img src="${e.target.result}" alt="Preview" style="max-width: 100%; max-height: 200px;">`;
-                                };
+                        //         reader.onload = function(e) {
+                        //             imagePreview.innerHTML =
+                        //                 `<img src="${e.target.result}" alt="Preview" style="max-width: 100%; max-height: 200px;">`;
+                        //         };
 
-                                reader.readAsDataURL(input.files[0]);
-                            } else {
-                                imagePreview.innerHTML = "";
-                            }
+                        //         reader.readAsDataURL(input.files[0]);
+                        //     } else {
+                        //         imagePreview.innerHTML = "";
+                        //     }
+                        // }
+
+                        function previewImage(){
+                            const image = document.querySelector('#image')
+                            const imgPreview = document.querySelector('.img-preview')
+
+                            imgPreview.style.display = 'block'
+
+                            const oFReader = new FileReader()
+                            oFReader.readAsDataURL(image.files[0]);
+                            
+                            oFReader.onload = function(oFREvent){
+                                imgPreview.src = oFREvent.target.result
+                            };
                         }
                     </script>
 
