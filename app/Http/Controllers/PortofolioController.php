@@ -34,6 +34,7 @@ class PortofolioController extends Controller
         ]);
     }
 
+
     public function register()
     {
         return view("landing.register");
@@ -67,7 +68,7 @@ class PortofolioController extends Controller
         
             // Resize the image to your desired dimensions (e.g., 200x200)
             $resizedImage = Image::make($image)->fit(200, 200);
-            $thumbnailImage = Image::make($image)->fit(1280, 720);
+            $thumbnailImage = Image::make($image)->fit(160, 90);
         
             // Define the base path
             $basePath = '/posted';
@@ -162,10 +163,10 @@ class PortofolioController extends Controller
 
         if($request->file('image')){
             if ($request->oldImage) {
-                dd($request->oldImage);
-                Storage::delete('public/posted/normal/' . $request->oldImage);
-                Storage::delete('public/posted/square/' . $request->oldImage);
-                Storage::delete('public/posted/thumbnail/' . $request->oldImage);
+                // dd($request->file('image'));
+                Storage::delete('posted/normal/' . $request->oldImage);
+                Storage::delete('posted/square/' . $request->oldImage);
+                Storage::delete('posted/thumbnail/' . $request->oldImage);
             }
 
             if ($request->file('image')) {
@@ -187,7 +188,7 @@ class PortofolioController extends Controller
                 // Save the original image to the storage directory with the same filename
                 Storage::put($basePath . '/normal/' . $filename, file_get_contents($image));
 
-                Storage::put($basePath . '/thumbnail/' . $filename, $resizedImage->encode());
+                Storage::put($basePath . '/thumbnail/' . $filename, $thumbnailImage->encode());
 
             
                 // Store the path to the resized image in the $userData array

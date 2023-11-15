@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GaleryController;
 use App\Http\Controllers\PortofolioController;
 use Illuminate\Support\Facades\Route;
 
@@ -41,6 +42,18 @@ Route::get("/{id}/edit", [PortofolioController::class,"edit"])->name("edit");
 Route::put("/{id}", [PortofolioController::class,'update'])->name('update');
 
 Route::get('/imageres', [PortofolioController::class, "image"]);
+
+Route::get('/galeri', [GaleryController::class, "index"])->name('galeri.index');
+Route::get('/galeri/create', [GaleryController::class, "create"])->name('galeri.create');
+Route::post('/galeri', [GaleryController::class, "store"])->name('galeri.store');
+Route::get('/galeri/{id}/edit', [GaleryController::class, "edit"])->name('galeri.edit');
+Route::put('/galeri/{id}', [GaleryController::class, "update"])->name('galeri.update');
+Route::delete('/galeri/{id}', [GaleryController::class, "destroy"])->name('galeri.destroy');
+
+
+
+
+
 
 
 Route::get('/logout', [PortofolioController::class, 'logout']);
