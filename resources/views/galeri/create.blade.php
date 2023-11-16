@@ -35,7 +35,7 @@
               <span>Drag and drop your</span>&nbsp;<span>files anywhere or</span>
             </p>
             <input id="hidden-input" type="file" name="photo" multiple class="hidden" />
-            <button id="button" class="mt-2 rounded-sm px-3 py-1 bg-gray-200 hover:bg-gray-300 focus:shadow-outline focus:outline-none">
+            <button type="button" id="button" class="mt-2 rounded-sm px-3 py-1 bg-gray-200 hover:bg-gray-300 focus:shadow-outline focus:outline-none">
               Upload a file
             </button>
           </header>
@@ -59,7 +59,7 @@
             Upload now
           </button>
         {{-- </a> --}}
-          <button id="cancel" class="ml-3 rounded-sm px-3 py-1 hover:bg-gray-300 focus:shadow-outline focus:outline-none">
+          <button type="button" id="cancel" class="ml-3 rounded-sm px-3 py-1 hover:bg-gray-300 focus:shadow-outline focus:outline-none">
             Cancel
           </button>
         </footer>

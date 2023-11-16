@@ -19,6 +19,7 @@
 
 
     <div class="min-h-screen py-5">
+        @if ($galeri->count()>0)
         <div class='overflow-x-auto w-full'>
             <table class='mx-auto max-w-4xl w-full whitespace-nowrap rounded-lg bg-white divide-y divide-gray-300 overflow-hidden'>
                 <thead class="bg-gray-900">
@@ -29,25 +30,31 @@
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200">
+                    @foreach ($galeri as $galeri)   
                     <tr>
                         <td class="px-6 py-4">
-                            <img src="" alt="">
+                            <img src="{{ asset('storage/galeri/thumbnail/'.$galeri->photo) }}" alt="{{ $galeri->photo }}">
                         </td>
                         <td class="px-6 py-4">
-                            <img src="" alt="">
+                            <img src="{{ asset('storage/galeri/square/'.$galeri->photo) }}" alt="{{ $galeri->photo }}">
                         </td>
                         <td class="px-6 py-4"> 
-                            <a href="#" class="text-purple-800 hover:underline">Edit</a> 
-                            <form action="post">
+                            <a href="{{ route('galeri.edit', $galeri->id) }}" class="text-purple-800 hover:underline">Edit</a> 
+                            <form action="{{ route('galeri.destroy', $galeri->id) }}" method="post">
                                 @csrf
                                 @method('delete')
                                 <button type="submit" class="text-red-800 hover:underline">Delete</button> 
                             </form>
                         </td>
                     </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
+        @else 
+        <h1 class="text-center  text-white text-xl font-bold">Tidak ada Photo</h1>
+        @endif
+        
     </div>
 
 @endsection
